@@ -1,0 +1,127 @@
+# ── 사이트 기본 정보 ─────────────────────────────────────────────
+# 도메인: ddakjihub.com (구매 완료) — 배포 시 워크플로가 Pages 설정 기준으로 baseURL 자동 교정.
+baseURL = 'https://ddakjihub.com/'
+locale = 'ko-kr'
+defaultContentLanguage = 'ko'
+title = '딱지허브'
+theme = 'PaperMod'
+
+# ── SEO 기본 ────────────────────────────────────────────────────
+enableRobotsTXT = true
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+pygmentsUseClasses = true
+
+[pagination]
+  pagerSize = 10
+
+[taxonomies]
+  category = 'categories'
+  tag = 'tags'
+
+# 포스트 URL을 파일명 기반으로 — 영문 파일명 필수
+# (:slug는 slug 미지정 시 한글 제목으로 폴백하므로 :filename 사용)
+[permalinks]
+  posts = '/posts/:filename/'
+
+[outputs]
+  home = ['HTML', 'RSS', 'JSON']
+
+[minify]
+  disableXML = true
+
+[params]
+  env = 'production'
+  description = '반려견 품종 정보부터 일상·관리·건강·용품까지, 한국 반려동물 가족을 위한 에버그린 정보 허브'
+  keywords = ['반려견', '강아지', '반려동물', '견종 정보', '강아지 키우기', '반려동물 상식']
+  author = '딱지허브'
+  defaultTheme = 'auto'
+  DateFormat = '2006. 01. 02.'
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowToc = true
+  TocOpen = false
+  comments = false
+  mainSections = ['posts']
+  # 홈 <title> — 글 페이지는 "제목 | 딱지허브" (layouts/_partials/head.html 오버라이드)
+  homeTitle = '딱지허브 · 강아지·반려동물 정보'
+  # 네이버 서치어드바이저 소유 확인 코드 (등록 후 입력)
+  # naverSiteVerification = ''
+
+[params.homeInfoParams]
+  Title = '반려동물 정보, 딱지허브에서 한 번에'
+  Content = '''
+강아지 품종 정보부터 털 관리, 사료 선택, 건강 상식까지 — 검색으로 흩어진 정보를 한국 실정에 맞게 정리합니다. 반려견 **딱지**와 함께 살아가는 경험에서 시작된 허브입니다.
+
+[전체 글 보기 →](/posts/)
+
+[품종](/categories/품종/) [일상](/categories/일상/) [관리](/categories/관리/) [건강](/categories/건강/) [용품](/categories/용품/)
+'''
+
+[params.label]
+  text = '딱지허브'
+  icon = '/favicon.svg'
+  iconHeight = 26
+
+[[params.socialIcons]]
+  name = 'rss'
+  url = 'index.xml'
+
+[params.assets]
+  favicon = 'favicon.svg'
+  apple_touch_icon = 'favicon.svg'
+  safari_pinned_tab = 'favicon.svg'
+  theme_color = '#b45309'
+  msapplication_TileColor = '#b45309'
+  disableFingerprinting = false
+
+# ── 메뉴 ────────────────────────────────────────────────────────
+[[menus.main]]
+  name = '홈'
+  url = '/'
+  weight = 1
+
+[[menus.main]]
+  name = '전체 글'
+  url = 'archives/'
+  weight = 2
+
+[[menus.main]]
+  name = '카테고리'
+  url = 'categories/'
+  weight = 3
+
+[[menus.main]]
+  name = '태그'
+  url = 'tags/'
+  weight = 4
+
+[[menus.main]]
+  name = '소개'
+  url = 'about/'
+  weight = 5
+
+[[menus.main]]
+  name = '검색'
+  url = 'search/'
+  weight = 6
+
+# ── 문법 강조 ───────────────────────────────────────────────────
+[markup.highlight]
+  style = 'dracula'
+  lineNos = false
+  codeFences = true
+  guessSyntax = true
+  noClasses = false
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[sitemap]
+  changefreq = 'daily'
+  priority = 0.5
+  filename = 'sitemap.xml'
