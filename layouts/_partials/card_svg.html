@@ -1,26 +1,26 @@
-{{- /* 제목·카테고리 기반 커버 카드 SVG 인라인 생성 (별도 이미지 파일 불필요) */ -}}
+{{- /* 커버 카드 — 파스텔 배경 + 카테고리 이모지 + 발자국 패턴 (aidaily 그라디언트 카드와 다른 포털 스타일) */ -}}
 {{- $title := .Title | plainify -}}
 {{- $cat := "" -}}
 {{- with .GetTerms "categories" -}}{{- $cat = (index . 0).Title -}}{{- end -}}
-{{- /* 카테고리별 그라디언트 팔레트 — 반려동물 사이트 따뜻한 톤 */ -}}
+{{- /* 카테고리별 파스텔 배경 + 진한 글자색 */ -}}
 {{- $palettes := dict
-    "품종" (dict "c1" "#78350f" "c2" "#c2711d")
-    "일상" (dict "c1" "#365314" "c2" "#65a30d")
-    "관리" (dict "c1" "#134e4a" "c2" "#0d9488")
-    "훈련" (dict "c1" "#312e81" "c2" "#6366f1")
-    "건강" (dict "c1" "#7f1d1d" "c2" "#dc4b3f")
-    "용품" (dict "c1" "#581c87" "c2" "#9333ea")
+    "품종" (dict "bg" "#f6e7d3" "fg" "#7a4a12" "em" "🐾")
+    "일상" (dict "bg" "#e8f0d5" "fg" "#4a6218" "em" "☀️")
+    "관리" (dict "bg" "#d9eeea" "fg" "#135f56" "em" "🛁")
+    "훈련" (dict "bg" "#e2e1f7" "fg" "#3d3a8c" "em" "🎾")
+    "건강" (dict "bg" "#f9dedb" "fg" "#93342b" "em" "❤️")
+    "용품" (dict "bg" "#eedff8" "fg" "#6d2f96" "em" "🛒")
 -}}
 {{- $p := index $palettes $cat -}}
 {{- if not $p -}}{{- $p = index $palettes "품종" -}}{{- end -}}
-{{- /* 제목을 최대 3줄로 패킹 (줄당 16자) */ -}}
+{{- /* 제목을 최대 3줄로 패킹 (줄당 15자) */ -}}
 {{- $words := split $title " " -}}
 {{- $lines := slice -}}
 {{- $cur := "" -}}
 {{- range $w := $words -}}
     {{- $cand := $w -}}
     {{- if ne $cur "" -}}{{- $cand = printf "%s %s" $cur $w -}}{{- end -}}
-    {{- if and (ne $cur "") (gt (strings.RuneCount $cand) 16) -}}
+    {{- if and (ne $cur "") (gt (strings.RuneCount $cand) 15) -}}
         {{- $lines = $lines | append $cur -}}
         {{- $cur = $w -}}
     {{- else -}}
@@ -32,38 +32,39 @@
     {{- $lines = slice (index $lines 0) (index $lines 1) (printf "%s…" (index $lines 2)) -}}
 {{- end -}}
 {{- $n := len $lines -}}
-{{- $y0 := 340 -}}
-{{- if eq $n 2 -}}{{- $y0 = 302 -}}{{- end -}}
-{{- if eq $n 3 -}}{{- $y0 = 264 -}}{{- end -}}
+{{- $y0 := 430 -}}
+{{- if eq $n 2 -}}{{- $y0 = 382 -}}{{- end -}}
+{{- if eq $n 3 -}}{{- $y0 = 334 -}}{{- end -}}
 {{- $date := .Date | time.Format "2006. 01. 02." -}}
 {{- $uid := substr (md5 $title) 0 6 -}}
-{{- $badge := "딱지허브" -}}
-{{- if ne $cat "" -}}{{- $badge = printf "딱지허브 · %s" $cat -}}{{- end -}}
-{{- $bw := add 52 (mul (strings.RuneCount $badge) 17) -}}
 <svg class="gen-card" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{{ $title }}">
-    <defs>
-        <linearGradient id="gc{{ $uid }}" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="{{ $p.c1 }}"/>
-            <stop offset="1" stop-color="{{ $p.c2 }}"/>
-        </linearGradient>
-    </defs>
-    <rect width="1200" height="630" fill="url(#gc{{ $uid }})"/>
-    <circle cx="1070" cy="70" r="270" fill="#ffffff" opacity="0.06"/>
-    <circle cx="1160" cy="570" r="190" fill="#ffffff" opacity="0.05"/>
-    <circle cx="60" cy="620" r="150" fill="#000000" opacity="0.12"/>
-    {{- /* 발자국 장식 (오른쪽 아래) */ -}}
-    <g fill="#ffffff" opacity="0.10" transform="translate(940,380) scale(2.6)">
-        <ellipse cx="30" cy="52" rx="24" ry="20"/>
-        <circle cx="6" cy="20" r="9"/>
-        <circle cx="24" cy="8" r="9"/>
-        <circle cx="44" cy="10" r="9"/>
-        <circle cx="60" cy="26" r="9"/>
+    <rect width="1200" height="630" fill="{{ $p.bg }}"/>
+    {{- /* 발자국 패턴 — 크기·투명도를 달리해 흩어 뿌림 */ -}}
+    {{- $paws := slice
+        (dict "x" 950 "y" 90 "s" 1.6 "o" 0.35)
+        (dict "x" 1090 "y" 300 "s" 1.1 "o" 0.22)
+        (dict "x" 880 "y" 420 "s" 0.8 "o" 0.18)
+        (dict "x" 60 "y" 80 "s" 0.9 "o" 0.15)
+        (dict "x" 200 "y" 500 "s" 1.3 "o" 0.2)
+    -}}
+    {{- range $pw := $paws }}
+    <g transform="translate({{ $pw.x }},{{ $pw.y }}) scale({{ $pw.s }})" fill="{{ $p.fg }}" opacity="{{ $pw.o }}">
+        <ellipse cx="0" cy="52" rx="24" ry="20"/>
+        <circle cx="-24" cy="20" r="9"/>
+        <circle cx="-6" cy="8" r="9"/>
+        <circle cx="14" cy="10" r="9"/>
+        <circle cx="30" cy="26" r="9"/>
     </g>
-    <rect x="72" y="96" width="{{ $bw }}" height="48" rx="24" fill="#ffffff" opacity="0.16"/>
-    <text x="98" y="128" font-family="Pretendard Variable, Pretendard, 'Noto Sans KR', 'Malgun Gothic', sans-serif" font-size="24" font-weight="600" fill="#ffffff">{{ $badge }}</text>
-    {{- range $i, $l := $lines }}
-    <text x="72" y="{{ add $y0 (mul $i 84) }}" font-family="Pretendard Variable, Pretendard, 'Noto Sans KR', 'Malgun Gothic', sans-serif" font-size="62" font-weight="700" fill="#ffffff">{{ $l }}</text>
+    {{- end -}}
+    {{- /* 카테고리 이모지 — 우측 크게 */ -}}
+    <text x="1060" y="250" text-anchor="middle" font-size="150">{{ $p.em }}</text>
+    {{- if ne $cat "" }}
+    <rect x="72" y="96" height="46" rx="23" fill="{{ $p.fg }}" opacity="0.14"/>
+    <text x="170" y="127" text-anchor="middle" font-family="Pretendard Variable, Pretendard, 'Noto Sans KR', sans-serif" font-size="24" font-weight="600" fill="{{ $p.fg }}">{{ $cat }}</text>
     {{- end }}
-    <text x="72" y="562" font-family="Pretendard Variable, Pretendard, 'Noto Sans KR', 'Malgun Gothic', sans-serif" font-size="26" fill="#ffffff" opacity="0.85">{{ $date }}</text>
-    <text x="880" y="562" text-anchor="end" font-family="Pretendard Variable, Pretendard, 'Noto Sans KR', 'Malgun Gothic', sans-serif" font-size="28" font-weight="700" fill="#ffffff">딱지허브</text>
+    {{- range $i, $l := $lines }}
+    <text x="72" y="{{ add $y0 (mul $i 78) }}" font-family="Pretendard Variable, Pretendard, 'Noto Sans KR', sans-serif" font-size="58" font-weight="800" fill="{{ $p.fg }}">{{ $l }}</text>
+    {{- end }}
+    <text x="74" y="580" font-family="Pretendard Variable, Pretendard, 'Noto Sans KR', sans-serif" font-size="24" fill="{{ $p.fg }}" opacity="0.65">{{ $date }}</text>
+    <text x="1128" y="580" text-anchor="end" font-family="Pretendard Variable, Pretendard, 'Noto Sans KR', sans-serif" font-size="24" font-weight="700" fill="{{ $p.fg }}" opacity="0.65">딱지허브</text>
 </svg>

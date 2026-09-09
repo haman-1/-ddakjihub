@@ -1,0 +1,48 @@
+{{- /* 히어로 일러스트 — 플랫 스타일 개 얼굴 SVG (AI 일러스트 확정 전 임시 아이덴티티) */ -}}
+<svg viewBox="0 0 360 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="귀여운 개 일러스트">
+    <defs>
+        <clipPath id="hero-round">
+            <rect x="0" y="0" width="360" height="320" rx="28"/>
+        </clipPath>
+    </defs>
+    <g clip-path="url(#hero-round)">
+        <rect width="360" height="320" fill="#f3e2c8"/>
+        <circle cx="40" cy="40" r="110" fill="#eccf9f" opacity="0.5"/>
+        <circle cx="330" cy="290" r="90" fill="#eccf9f" opacity="0.5"/>
+        <g transform="translate(58,4)" fill="#c98a4b" opacity="0.25">
+            <ellipse cx="0" cy="52" rx="20" ry="16"/>
+            <circle cx="-20" cy="20" r="7"/>
+            <circle cx="-5" cy="6" r="7"/>
+            <circle cx="12" cy="8" r="7"/>
+            <circle cx="25" cy="22" r="7"/>
+        </g>
+        <g transform="translate(240,270) scale(1.1)" fill="#c98a4b" opacity="0.25">
+            <ellipse cx="0" cy="52" rx="20" ry="16"/>
+            <circle cx="-20" cy="20" r="7"/>
+            <circle cx="-5" cy="6" r="7"/>
+            <circle cx="12" cy="8" r="7"/>
+            <circle cx="25" cy="22" r="7"/>
+        </g>
+        {{- /* 귀 (왼·오른쪽 처진 귀) */ -}}
+        <path d="M96 96 C 52 96 40 170 62 208 C 74 228 100 224 106 198 C 112 168 110 120 96 96 Z" fill="#8a4f1d"/>
+        <path d="M264 96 C 308 96 320 170 298 208 C 286 228 260 224 254 198 C 248 168 250 120 264 96 Z" fill="#8a4f1d"/>
+        {{- /* 머리 */ -}}
+        <circle cx="180" cy="150" r="98" fill="#c98a4b"/>
+        <circle cx="180" cy="150" r="98" fill="#b45309" opacity="0.14"/>
+        {{- /* 얼굴 하단 (밝은 털) */ -}}
+        <ellipse cx="180" cy="196" rx="62" ry="48" fill="#f5ddba"/>
+        {{- /* 눈 */ -}}
+        <circle cx="148" cy="140" r="9" fill="#3a2a18"/>
+        <circle cx="212" cy="140" r="9" fill="#3a2a18"/>
+        <circle cx="151" cy="137" r="3" fill="#ffffff"/>
+        <circle cx="215" cy="137" r="3" fill="#ffffff"/>
+        {{- /* 코 + 입 */ -}}
+        <ellipse cx="180" cy="178" rx="14" ry="11" fill="#3a2a18"/>
+        <path d="M180 189 L180 202 M180 202 C 172 212 160 210 156 202 M180 202 C 188 212 200 210 204 202" stroke="#3a2a18" stroke-width="5" fill="none" stroke-linecap="round"/>
+        {{- /* 혀 */ -}}
+        <path d="M172 206 C 172 224 188 224 188 206 C 184 210 176 210 172 206 Z" fill="#e06a5a"/>
+        {{- /* 볼터치 */ -}}
+        <circle cx="122" cy="176" r="10" fill="#e08d5a" opacity="0.45"/>
+        <circle cx="238" cy="176" r="10" fill="#e08d5a" opacity="0.45"/>
+    </g>
+</svg>

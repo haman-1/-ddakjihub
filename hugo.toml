@@ -52,16 +52,6 @@ pygmentsUseClasses = true
   # 네이버 서치어드바이저 소유 확인 코드 (등록 후 입력)
   # naverSiteVerification = ''
 
-[params.homeInfoParams]
-  Title = '반려동물 정보, 딱지허브에서 한 번에'
-  Content = '''
-강아지 품종 정보부터 털 관리, 사료 선택, 건강 상식까지 — 검색으로 흩어진 정보를 한국 실정에 맞게 정리합니다. 반려견 **딱지**와 함께 살아가는 경험에서 시작된 허브입니다.
-
-[전체 글 보기 →](/posts/)
-
-[품종](/categories/품종/) [일상](/categories/일상/) [관리](/categories/관리/) [건강](/categories/건강/) [용품](/categories/용품/)
-'''
-
 [params.label]
   text = '딱지허브'
   icon = '/favicon.svg'

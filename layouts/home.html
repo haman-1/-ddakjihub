@@ -1,0 +1,67 @@
+{{- /* 포털형 홈 — 히어로 + 카테고리 그리드 + 최신글 그리드 (PaperMod list.html을 대체하는 전용 홈 템플릿) */ -}}
+{{ define "main" }}
+
+<section class="portal-hero">
+  <div class="portal-hero-inner">
+    <div class="portal-hero-text">
+      <span class="portal-hero-badge">🐾 반려견 '딱지'가 집사장인 정보 허브</span>
+      <h1>반려동물 정보,<br>딱지허브에서 한 번에</h1>
+      <p>품종 특성부터 털 관리, 사료 선택, 건강 상식까지 — 검색하느라 흩어져 있던 정보를 한국 실정에 맞게 정리했습니다.</p>
+      <a class="portal-hero-cta" href="{{ "posts/" | relURL }}">전체 글 보기 <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="portal-hero-art" aria-hidden="true">
+      {{ partial "hero_dog.html" . }}
+    </div>
+  </div>
+</section>
+
+{{- /* 카테고리 그리드 — 6개 고정 (새 카테고리 추가 시 여기와 함께 편집) */ -}}
+{{- $cats := slice
+  (dict "name" "품종" "emoji" "🐾" "desc" "견종별 특성·색상 변형")
+  (dict "name" "일상" "emoji" "☀️" "desc" "반려동물과의 하루·경험")
+  (dict "name" "관리" "emoji" "🛁" "desc" "털·목욕·산책 케어")
+  (dict "name" "훈련" "emoji" "🎾" "desc" "기초 훈련·문제 행동")
+  (dict "name" "건강" "emoji" "❤️" "desc" "유전병·예방·응급 대처")
+  (dict "name" "용품" "emoji" "🛒" "desc" "사료·용품 비교·선택")
+-}}
+<section class="portal-cats">
+  <div class="portal-cats-grid">
+    {{ range $cats }}
+    <a class="portal-cat" href="{{ printf "categories/%s/" .name | relURL }}">
+      <span class="portal-cat-emoji">{{ .emoji }}</span>
+      <span class="portal-cat-name">{{ .name }}</span>
+      <span class="portal-cat-desc">{{ .desc }}</span>
+    </a>
+    {{ end }}
+  </div>
+</section>
+
+{{- /* 최신 글 그리드 */ -}}
+{{- $pages := where site.RegularPages "Type" "in" site.Params.mainSections }}
+{{- $latest := first 6 $pages }}
+<section class="portal-latest">
+  <h2 class="portal-section-title">최신 글</h2>
+  {{- if gt (len $latest) 0 }}
+  <div class="portal-grid">
+    {{- range $latest }}
+    <a class="portal-card" href="{{ .RelPermalink }}">
+      <div class="portal-card-cover">{{ partial "card_svg.html" . }}</div>
+      <div class="portal-card-body">
+        {{- with (.GetTerms "categories") }}{{ if gt (len .) 0 }}
+        <span class="portal-card-cat">{{ (index . 0).Title }}</span>
+        {{ end }}{{ end }}
+        <h3 class="portal-card-title">{{ .Title }}</h3>
+        <time class="portal-card-date" datetime="{{ .Date }}">{{ .Date | time.Format "2006. 01. 02." }}</time>
+      </div>
+    </a>
+    {{- end }}
+  </div>
+  {{- if gt (len $pages) 6 }}
+  <div class="portal-more-wrap"><a class="portal-more" href="{{ "posts/" | relURL }}">전체 글 보기 →</a></div>
+  {{- end }}
+  {{- else }}
+  <p class="portal-empty">첫 글을 준비하고 있습니다. 조금만 기다려 주세요 🐶</p>
+  {{- end }}
+</section>
+
+{{ end }}
